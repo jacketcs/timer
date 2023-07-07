@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .timer-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .timer-container h1 {
+      margin-right: 20px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin: 0 33.33%;
+    }
+
+    .button-container button {
+      margin: 5px;
+      font-size: 16px;
+      padding: 5px 10px;
+    }
+
+    .reset-button,
+    .pause-button {
+      flex: 1;
+    }
+
+    .start-button{
+      font-size: 20px; /* Adjust the font size as needed */
+      font-weight: bold;
+      flex: 2;
+      padding: 10px 20px;
+    }
+
+    .logo-image {
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="cob logo.png" alt="CoB Logo" class="logo-image">
+  
+  <div class="timer-container">
+    <h1 id="timer">00:00</h1>
+    <button onclick="startTimer()" class="start-button">Start</button>
+  </div>
+
+  <div class="button-container">
+    <button onclick="setTime(5)">5 minutes</button>
+    <button onclick="setTime(3)">3 minutes</button>
+  </div>
+
+  <br>
+
+  <div class="button-container">
+    <button onclick="setTime(2)">2 minutes</button>
+    <button onclick="setTime(1)">1 minute</button>
+  </div>
+
+  <br>
+
+  <div class="button-container">
+    <button onclick="pauseTimer()" class="pause-button">Pause</button>
+    <button onclick="resetTimer()" class="reset-button">Reset</button>
+  </div>
+
+  <script>
+    let timerElement = document.getElementById('timer');
+    let countdown;
+    let secondsRemaining;
+    let startingTime;
+
+    function setTime(minutes) {
+      secondsRemaining = minutes * 60;
+      startingTime = secondsRemaining;
+      updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+      let minutes = Math.floor(secondsRemaining / 60);
+      let seconds = secondsRemaining % 60;
+      let formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      timerElement.textContent = formattedTime;
+    }
+
+    function startTimer() {
+      if (countdown) return; // Timer is already running
+      
+      countdown = setInterval(() => {
+        secondsRemaining--;
+        updateTimerDisplay();
+        
+        if (secondsRemaining <= 0) {
+          clearInterval(countdown);
+          countdown = null;
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      if (countdown) {
+        clearInterval(countdown);
+        countdown = null;
+      } else {
+        startTimer();
+      }
+    }
+
+    function resetTimer() {
+      secondsRemaining = startingTime;
+      updateTimerDisplay();
+    }
+  </script>
+</body>
+</html>
