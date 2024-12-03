@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .timer-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .timer-container h2 {
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .timer-container h1 {
+      margin: 0;
+      color: black;
+    }
+
+    .timer-container h1.red-flash {
+     /* animation: flash 1s infinite;*/
+      color: red;
+    }
+
+    @keyframes flash {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .timer-controls {
+      display: flex;
+      align-items: center;
+    }
+
+    .start-button {
+      font-size: 20px;
+      font-weight: bold;
+      margin-left: 10px; /* Add some space between timer and start button */
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin: 0 33.33%;
+    }
+
+    .button-container button {
+      margin: 5px;
+      font-size: 16px;
+      padding: 10px 20px;
+    }
+
+    .reset-button,
+    .pause-button {
+      flex: 1;
+    }
+
+    .logo-image {
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <img src="cob logo.png" alt="Logo" class="logo-image">
+  <br>
+  <div class="timer-container">
+    <h2>City of Berkeley <br>Zoning Adjustments Board Timer</h2>
+    <div class="timer-controls">
+      <h1 id="timer">00:00</h1>
+      <button onclick="startTimer()" class="start-button">Start</button>
+    </div>
+  </div>
+ <br><br>
+  <div class="button-container">
+    <button onclick="setTime(5)">5 minutes</button>
+    <button onclick="setTime(3)">3 minutes</button>
+  </div>
+
+  <br>
+
+  <div class="button-container">
+    <button onclick="setTime(2)">2 minutes</button>
+    <button onclick="setTime(1)">1 minute</button>
+  </div>
+
+  <br>
+
+  <div class="button-container">
+    <button onclick="pauseTimer()" class="pause-button">Pause</button>
+    <button onclick="resetTimer()" class="reset-button">Reset</button>
+  </div>
+
+  <script>
+    let timerElement = document.getElementById('timer');
+    let countdown;
+    let secondsRemaining;
+    let startingTime;
+
+    function setTime(minutes) {
+      secondsRemaining = minutes * 60;
+      startingTime = secondsRemaining;
+      updateTimerDisplay();
+    }
+
+    setTime(5);
+
+    function updateTimerDisplay() {
+      let minutes = Math.floor(secondsRemaining / 60);
+      let seconds = secondsRemaining % 60;
+      let formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      timerElement.textContent = formattedTime;
+
+      if (secondsRemaining < 30) {
+        timerElement.classList.add('red-flash');
+      } else {
+        timerElement.classList.remove('red-flash');
+      }
+    }
+
+    function startTimer() {
+      if (countdown) return;
+      
+      countdown = setInterval(() => {
+        secondsRemaining--;
+        updateTimerDisplay();
+        
+        if (secondsRemaining <= 0) {
+          clearInterval(countdown);
+          countdown = null;
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      if (countdown) {
+        clearInterval(countdown);
+        countdown = null;
+      } else {
+        startTimer();
+      }
+    }
+
+    function resetTimer() {
+      secondsRemaining = startingTime;
+      updateTimerDisplay();
+    }
+  </script>
+</body>
+</html>
