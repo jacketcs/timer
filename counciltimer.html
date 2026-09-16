@@ -196,7 +196,7 @@
  
     function playAlarmSound() {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const chimeCount = 3;
+      const chimeCount = 6;
       const notes = [880, 660]; // gentle two-note "ding-dong" chime
       for (let i = 0; i < chimeCount; i++) {
         notes.forEach((freq, noteIndex) => {
@@ -208,7 +208,7 @@
           oscillator.frequency.value = freq;
           const startTime = audioCtx.currentTime + i * 1.0 + noteIndex * 0.28;
           gainNode.gain.setValueAtTime(0.001, startTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.5, startTime + 0.02);
+          gainNode.gain.exponentialRampToValueAtTime(0.9, startTime + 0.02);
           gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + 0.5);
           oscillator.start(startTime);
           oscillator.stop(startTime + 0.5);
