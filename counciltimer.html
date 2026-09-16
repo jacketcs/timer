@@ -193,22 +193,26 @@
       }, 1000);
     }
 
-
+ 
     function playAlarmSound() {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const beepCount = 3;
-      for (let i = 0; i < beepCount; i++) {
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        oscillator.type = 'sine';
-        oscillator.frequency.value = 880;
-        const startTime = audioCtx.currentTime + i * 0.4;
-        gainNode.gain.setValueAtTime(0.3, startTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + 0.3);
-        oscillator.start(startTime);
-        oscillator.stop(startTime + 0.3);
+      const chimeCount = 3;
+      const notes = [880, 660]; // gentle two-note "ding-dong" chime
+      for (let i = 0; i < chimeCount; i++) {
+        notes.forEach((freq, noteIndex) => {
+          const oscillator = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+          oscillator.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+          oscillator.type = 'sine';
+          oscillator.frequency.value = freq;
+          const startTime = audioCtx.currentTime + i * 1.0 + noteIndex * 0.28;
+          gainNode.gain.setValueAtTime(0.001, startTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.5, startTime + 0.02);
+          gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + 0.5);
+          oscillator.start(startTime);
+          oscillator.stop(startTime + 0.5);
+        });
       }
     }
 
