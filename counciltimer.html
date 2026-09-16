@@ -28,7 +28,7 @@
     .timer-container h1 {
       margin: 0;
       color: black;
-      font-size: 180px;
+      font-size: 150px;
       line-height: 1;
     }
 
@@ -54,39 +54,64 @@
       align-items: center;
     }
 
-    .start-button {
-      font-size: 20px;
-      font-weight: bold;
-      margin-left: 10px; /* Add some space between timer and start button */
+    .main-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
     }
 
-    .button-container {
+    .primary-controls {
       display: flex;
       justify-content: center;
-      margin: 0 33.33%;
+      margin-top: 15px;
     }
 
-    .button-container button {
+    .primary-controls button {
+      font-size: 24px;
+      font-weight: bold;
+      padding: 12px 30px;
+      margin: 0 8px;
+    }
+
+    .side-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .minute-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .minute-row {
+      display: flex;
+    }
+
+    .minute-row button {
       margin: 5px;
       font-size: 16px;
       padding: 10px 20px;
     }
 
-    .reset-button,
-    .pause-button {
-      flex: 1;
-    }
-
     .adjust-stack {
       display: flex;
-      flex-direction: column;
       margin-left: 15px;
     }
 
     .adjust-stack button {
       font-size: 14px;
       padding: 4px 10px;
-      margin: 2px 0;
+      margin: 0 2px;
+    }
+
+    .pause-button {
+      font-size: 16px;
+      padding: 10px 20px;
     }
 
     .logo-image {
@@ -97,35 +122,33 @@
 <body>
   <img src="cob logo.png" alt="Logo" class="logo-image">
   <br>
-  <div class="timer-container">
-    <h2>City of Berkeley <br>City Council Meeting Timer</h2>
-    <div class="timer-controls">
+  <div class="main-row">
+    <div class="timer-container">
+      <h2>City of Berkeley <br>City Council Meeting Timer</h2>
       <h1 id="timer">00:00</h1>
-      <button onclick="startTimer()" class="start-button">Start</button>
-      <div class="adjust-stack">
-        <button onclick="adjustTime(60)">+1 min</button>
-        <button onclick="adjustTime(-60)">-1 min</button>
+      <div class="primary-controls">
+        <button onclick="startTimer()" class="start-button">Start</button>
+        <button onclick="resetTimer()" class="reset-button">Reset</button>
       </div>
     </div>
-  </div>
- <br><br>
-  <div class="button-container">
-    <button onclick="setTime(5)">5 minutes</button>
-    <button onclick="setTime(3)">3 minutes</button>
-  </div>
 
-  <br>
-
-  <div class="button-container">
-    <button onclick="setTime(2)">2 minutes</button>
-    <button onclick="setTime(1)">1 minute</button>
-  </div>
-
-  <br>
-
-  <div class="button-container">
-    <button onclick="pauseTimer()" class="pause-button">Pause</button>
-    <button onclick="resetTimer()" class="reset-button">Reset</button>
+    <div class="side-column">
+      <div class="minute-group">
+        <div class="minute-row">
+          <button onclick="setTime(5)">5 minutes</button>
+          <button onclick="setTime(3)">3 minutes</button>
+        </div>
+        <div class="minute-row">
+          <button onclick="setTime(2)">2 minutes</button>
+          <button onclick="setTime(1)">1 minute</button>
+        </div>
+        <div class="adjust-stack">
+          <button onclick="adjustTime(60)">+1 min</button>
+          <button onclick="adjustTime(-60)">-1 min</button>
+        </div>
+      </div>
+      <button onclick="pauseTimer()" class="pause-button">Pause</button>
+    </div>
   </div>
 
   <script>
@@ -170,6 +193,11 @@
       }, 1000);
     }
 
+    // Placeholder alarm sound, generated with the Web Audio API since no
+    // sound file has been supplied yet. Swap this out for something like:
+    //   const audio = new Audio('alarm.mp3');
+    //   audio.play();
+    // once you have a real sound file to use.
     function playAlarmSound() {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const beepCount = 3;
