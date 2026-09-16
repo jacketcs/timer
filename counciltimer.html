@@ -28,7 +28,7 @@
     .timer-container h1 {
       margin: 0;
       color: black;
-      font-size: 150px;
+      font-size: 180px;
       line-height: 1;
     }
 
@@ -100,13 +100,13 @@
 
     .adjust-stack {
       display: flex;
-      margin-left: 15px;
+      justify-content: center;
     }
 
     .adjust-stack button {
-      font-size: 14px;
-      padding: 4px 10px;
-      margin: 0 2px;
+      margin: 5px;
+      font-size: 16px;
+      padding: 10px 20px;
     }
 
     .pause-button {
@@ -193,11 +193,7 @@
       }, 1000);
     }
 
-    // Placeholder alarm sound, generated with the Web Audio API since no
-    // sound file has been supplied yet. Swap this out for something like:
-    //   const audio = new Audio('alarm.mp3');
-    //   audio.play();
-    // once you have a real sound file to use.
+
     function playAlarmSound() {
       const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const beepCount = 3;
