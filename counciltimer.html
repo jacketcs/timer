@@ -75,6 +75,18 @@
       flex: 1;
     }
 
+    .adjust-stack {
+      display: flex;
+      flex-direction: column;
+      margin-left: 15px;
+    }
+
+    .adjust-stack button {
+      font-size: 14px;
+      padding: 4px 10px;
+      margin: 2px 0;
+    }
+
     .logo-image {
       width: 200px;
     }
@@ -88,6 +100,10 @@
     <div class="timer-controls">
       <h1 id="timer">00:00</h1>
       <button onclick="startTimer()" class="start-button">Start</button>
+      <div class="adjust-stack">
+        <button onclick="adjustTime(60)">+1 min</button>
+        <button onclick="adjustTime(-60)">-1 min</button>
+      </div>
     </div>
   </div>
  <br><br>
@@ -162,6 +178,14 @@
 
     function resetTimer() {
       secondsRemaining = startingTime;
+      updateTimerDisplay();
+    }
+
+    function adjustTime(deltaSeconds) {
+      secondsRemaining += deltaSeconds;
+      if (secondsRemaining < 0) {
+        secondsRemaining = 0;
+      }
       updateTimerDisplay();
     }
   </script>
